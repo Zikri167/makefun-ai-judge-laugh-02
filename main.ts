@@ -21,3 +21,8 @@ const back: string = readFileSync("/output/entry.txt", "utf8");
 if (back !== JOKE) {
   throw new Error("read-back mismatch: entry.txt is not byte-identical to JOKE");
 }
+
+// Determinism note: this program always writes the same 108-character,
+// 110-byte entry (sha256 ca6671ce247fbb44ffc9158cb37bea5bc07173df38c1a1eb9ca7ac83afa4eb13).
+// The em dash (U+2014) in the joke is 3 bytes in UTF-8; character count is
+// measured in Unicode code points, not bytes or UTF-16 units.
