@@ -27,3 +27,9 @@ if (back !== JOKE) {
 // The em dash (U+2014) in the joke is 3 bytes in UTF-8, so the byte count
 // (110) is larger than the character count (108): the gate counts Unicode
 // code points, not bytes or UTF-16 units.
+
+// The gate counts the file's bytes, so a trailing newline would change the
+// entry: refuse one explicitly even though the write above never adds it.
+if (readFileSync("/output/entry.txt", "utf8").endsWith("\n")) {
+  throw new Error("entry must not end with a newline");
+}
