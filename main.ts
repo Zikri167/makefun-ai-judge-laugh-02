@@ -28,6 +28,10 @@ if (back !== JOKE) {
 // (110) is larger than the character count (108): the gate counts Unicode
 // code points, not bytes or UTF-16 units.
 
+// Re-check the file we just wrote: a stray carriage return would corrupt
+// the line ending the judge counts, so fail loudly instead of shipping it.
+if (readFileSync("/output/entry.txt", "utf8").includes("\r")) throw new Error("entry.txt must not contain a carriage return");
+
 // The gate counts the file's bytes, so a trailing newline would change the
 // entry: refuse one explicitly even though the write above never adds it.
 if (readFileSync("/output/entry.txt", "utf8").endsWith("\n")) {
